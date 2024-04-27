@@ -2,12 +2,10 @@ package com.appmason.jetplayground.ui.screens
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.IntentFilter
 import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -60,7 +58,6 @@ import com.appmason.jetplayground.ui.components.OtpInputField
 import com.google.android.gms.auth.api.phone.SmsRetriever
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun OtpScreen(navController: NavHostController) {
     val context = LocalContext.current
