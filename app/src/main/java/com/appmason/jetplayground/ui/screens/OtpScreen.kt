@@ -1,6 +1,8 @@
 package com.appmason.jetplayground.ui.screens
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.IntentFilter
 import android.os.Build
@@ -191,7 +193,7 @@ fun OtpScreen(navController: NavHostController) {
 
 }
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+@SuppressLint("UnspecifiedRegisterReceiverFlag")
 @Composable
 fun OtpReceiverEffect(
     context: Context,
@@ -231,11 +233,19 @@ fun OtpReceiverEffect(
         try {
             Log.e("OTPReceiverEffect ", "Lifecycle.Event.ON_RESUME")
             Log.e("OTPReceiverEffect ", "Registering receiver")
-            context.registerReceiver(
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                context.registerReceiver(
+                    otpReceiver,
+                    IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION),
+                    Context.RECEIVER_EXPORTED
+                )
+            }else{
+                context.registerReceiver(
                 otpReceiver,
                 IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION),
-                Context.RECEIVER_EXPORTED
-            )
+            )}
+
+
         } catch (e: IllegalArgumentException) {
             Log.e("OTPReceiverEffect ", "Error in registering receiver: ${e.message}}")
         }
